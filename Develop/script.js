@@ -1,4 +1,7 @@
 // Assignment code here
+let length = 0;
+let characters = "";
+
 function getLength() {
   // get the length
   length =
@@ -39,8 +42,51 @@ function getLength() {
     }
   }
 }
+function getLowerChar() {
+  let charTypes = prompt(" do you want lowercase characters ?", "yes or no");
+  //ask if they want type case
+  while (charTypes !== "yes" && charTypes !== "no") {
+    //insure yes or no
+    charTypes = prompt(
+      " error you must enter 'yes' or 'no' Do you want lowercase characters ?",
+      "yes or no"
+    );
+  }
+  if (charTypes === "yes") {
+    var confirmChar = window.confirm(
+      //confirm yes
+      charTypes + " I want lowercase characters included?"
+    );
+    if (confirmChar === true) {
+      console.log(charTypes + "confirmed");
+      charTypes = "yes";
+    } else {
+      charTypes = "no"; //switch value if cancel is clicked
+      console.log("changed their mind");
+    }
+  } else {
+    //if chartype === no
+    var confirmChar = window.confirm(
+      //confirm no
+      charTypes + " I do not want lower characters included?"
+    );
+    if (confirmChar == true) {
+      console.log(charTypes + "confirmed");
+    } else {
+      charTypes = "yes";
+      console.log("changed their mind");
+    }
+  }
+
+  // add  characters
+  if (charTypes === "yes") {
+    characters += "abcdefghijklmnopqrstuvwxyz";
+  }
+}
 getLength();
+getLowerChar();
 console.log(length);
+console.log(characters);
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
