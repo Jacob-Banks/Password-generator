@@ -1,7 +1,106 @@
 // Assignment code here
+const lower = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+];
+const upper = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
+const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const special = [
+  "!",
+  "#",
+  "$",
+  "%",
+  "&",
+  "'",
+  "(",
+  ")",
+  "*",
+  "+",
+  ",",
+  "-",
+  ".",
+  "/",
+  ":",
+  ";",
+  "<",
+  "=",
+  ">",
+  "?",
+  "@",
+  "[",
+  "]",
+  "^",
+  "_",
+  "`",
+  "{",
+  "|",
+  "}",
+  "~",
+];
+
 let length = 0;
 let characters = "";
 let passwordG = 0;
+let lowers = false;
+let uppers = false;
+let numbereds = false;
+let specails = false;
+let test1 = false;
+let test2 = false;
+let test3 = false;
+let test4 = false;
+let z = 0;
 
 function getLength() {
   // get the length
@@ -112,15 +211,47 @@ function generatePassword() {
   getCharType("specialcase");
 
   var charactersLength = characters.length;
-  for (i = 0; i < length; i++) {
-    passwordG.push(
-      characters.charAt(Math.floor(Math.random() * charactersLength))
-    );
+  var goodToGo = false;
+
+  while (goodToGo == false) {
+    // fill password arrray //insure all selected char types are included
+
+    //randomly fill password with characters
+    for (i = 0; i < length; i++) {
+      passwordG.push(
+        characters.charAt(Math.floor(Math.random() * charactersLength))
+      );
+    }
+    //the check to see if char type is presant
+    if (lowers === true) {
+      test1 = passwordG.some((el) => lower.includes(el));
+    } else {
+      //if its not supposed to be there make it pass goodtogo check
+      test1 = true;
+    }
+    if (uppers === true) {
+      test2 = passwordG.some((el) => upper.includes(el));
+    } else {
+      test2 = true;
+    }
+    if (numbereds === true) {
+      test3 = passwordG.some((el) => numbers.includes(el));
+    } else {
+      test3 = true;
+    }
+    if (specails === true) {
+      test4 = passwordG.some((el) => special.includes(el));
+    } else {
+      test4 = true;
+    }
+    z = z + 1; // counter for how many attemps untill good to go passed
+    // if all the selected char types are present then move on to displaying password
+    if (test1 === true && test2 === true && test3 === true && test4 === true) {
+      goodToGo = true;
+    }
   }
-  console.log(length);
-
   console.log("included characters " + characters);
-
+  console.log("this ran  " + z + "  times");
   return passwordG.join("");
 }
 // Get references to the #generate element
