@@ -42,20 +42,27 @@ function getLength() {
     }
   }
 }
-function getLowerChar() {
-  let charTypes = prompt(" do you want lowercase characters ?", "yes or no");
+function getCharType(type) {
+  let charTypes = prompt(" do you want " + type + " characters ?", "yes or no");
   //ask if they want type case
-  while (charTypes !== "yes" && charTypes !== "no") {
+  while (
+    charTypes !== "yes" &&
+    charTypes !== "y" &&
+    charTypes !== "no" &&
+    charTypes !== "n"
+  ) {
     //insure yes or no
     charTypes = prompt(
-      " error you must enter 'yes' or 'no' Do you want lowercase characters ?",
+      " error you must enter 'yes' or 'no' Do you want " +
+        type +
+        " characters ?",
       "yes or no"
     );
   }
-  if (charTypes === "yes") {
+  if (charTypes === "yes" || charTypes === "y") {
     var confirmChar = window.confirm(
       //confirm yes
-      charTypes + " I want lowercase characters included?"
+      charTypes + " I want " + type + " characters included?"
     );
     if (confirmChar === true) {
       console.log(charTypes + "confirmed");
@@ -68,7 +75,7 @@ function getLowerChar() {
     //if chartype === no
     var confirmChar = window.confirm(
       //confirm no
-      charTypes + " I do not want lower characters included?"
+      charTypes + " I do not want " + type + " characters included?"
     );
     if (confirmChar == true) {
       console.log(charTypes + "confirmed");
@@ -78,13 +85,29 @@ function getLowerChar() {
     }
   }
 
-  // add  characters
-  if (charTypes === "yes") {
+  // add type of characters
+  if (type === "lowercase" && charTypes === "yes") {
     characters += "abcdefghijklmnopqrstuvwxyz";
+    lowers = true;
+  }
+  if (type === "uppercase" && charTypes === "yes") {
+    characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    uppers = true;
+  }
+  if (type === "numbered" && charTypes === "yes") {
+    characters += "0123456789";
+    numbereds = true;
+  }
+  if (type === "specialcase" && charTypes === "yes") {
+    characters += "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+    specails = true;
   }
 }
 getLength();
-getLowerChar();
+getCharType("lowercase");
+getCharType("uppercase");
+getCharType("numbered");
+getCharType("specialcase");
 console.log(length);
 console.log(characters);
 // Get references to the #generate element
