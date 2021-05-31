@@ -1,4 +1,5 @@
 // Assignment code here
+
 const lower = [
   "a",
   "b",
@@ -88,10 +89,10 @@ const special = [
   "}",
   "~",
 ];
-
 let length = 0;
 let characters = "";
-let passwordG = 0;
+let passwordG = [];
+
 let lowers = false;
 let uppers = false;
 let numbereds = false;
@@ -104,18 +105,18 @@ let z = 0;
 
 function getLength() {
   // get the length
-  length =
+  length = parseFloat(
     //toallow decimals monintairaly
     window.prompt(
       "Please enter number of characters, theres a minimum of 8 and a max of 128",
       "8"
-    );
+    )
+  );
 
-  while (length < 8 || length > 128) {
-    //insure length range
-    length = prompt(
-      "invalid input: an integer between 8 and 128 is required",
-      "8"
+  while (length < 8 || length > 128 || Number.isInteger(length) === false) {
+    //insure length range and no decimals
+    length = parseFloat(
+      prompt("invalid input: an integer between 8 and 128 is required", "8")
     );
   }
 
@@ -128,20 +129,22 @@ function getLength() {
     if (confirmLength === true) {
       console.log(length + " confirmed");
     } else {
-      length = prompt(
-        "Please enter number of characters, theres a minimum of 8 and a max of 128",
-        "8"
+      length = parseFloat(
+        prompt(
+          "Please enter number of characters, theres a minimum of 8 and a max of 128",
+          "8"
+        )
       );
     }
-    while (length < 8 || length > 128) {
+    while (length < 8 || length > 128 || Number.isInteger(length) === false) {
       // insure length
-      length = prompt(
-        "invalid input a minimum of 8 and a max of 128 is required",
-        "8"
+      length = parseFloat(
+        prompt("invalid input a minimum of 8 and a max of 128 is required", "8")
       ); // forced interger no more chances to change
     }
   }
 }
+
 function getCharType(type) {
   let charTypes = prompt(" do you want " + type + " characters ?", "yes or no");
   //ask if they want type case
@@ -203,12 +206,50 @@ function getCharType(type) {
     specails = true;
   }
 }
+
+function insureChar() {
+  if (characters === "") {
+    var confirmDefaultChar = window.confirm(
+      // call them a moron and give them a default or reload page
+      " Characters must be included, to go with default settings select ok, to start over select cancel"
+    );
+
+    if (confirmDefaultChar === true) {
+      //default is low upper number
+      characters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      lowers = true;
+      uppers = true;
+      numbereds = true;
+    } else {
+      //refresh page
+      location.reload;
+    }
+  }
+}
 function generatePassword() {
+  //reset values if genertor is run agaian
+  characters = "";
+  passwordG = [];
+  length = 0;
+  lowers = false;
+  uppers = false;
+  numbereds = false;
+  specails = false;
+  test1 = false;
+  test2 = false;
+  test3 = false;
+  test4 = false;
+
   getLength();
   getCharType("lowercase");
   getCharType("uppercase");
   getCharType("numbered");
   getCharType("specialcase");
+
+  // if they said no to all char types
+  insureChar();
+  //end of prompts
 
   var charactersLength = characters.length;
   var goodToGo = false;
@@ -253,7 +294,7 @@ function generatePassword() {
   console.log("included characters " + characters);
   console.log("this ran  " + z + "  times");
   return passwordG.join("");
-}
+} //end of the generatepassword function
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
