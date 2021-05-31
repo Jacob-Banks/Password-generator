@@ -1,6 +1,7 @@
 // Assignment code here
 let length = 0;
 let characters = "";
+let passwordG = 0;
 
 function getLength() {
   // get the length
@@ -103,13 +104,25 @@ function getCharType(type) {
     specails = true;
   }
 }
-getLength();
-getCharType("lowercase");
-getCharType("uppercase");
-getCharType("numbered");
-getCharType("specialcase");
-console.log(length);
-console.log(characters);
+function generatePassword() {
+  getLength();
+  getCharType("lowercase");
+  getCharType("uppercase");
+  getCharType("numbered");
+  getCharType("specialcase");
+
+  var charactersLength = characters.length;
+  for (i = 0; i < length; i++) {
+    passwordG.push(
+      characters.charAt(Math.floor(Math.random() * charactersLength))
+    );
+  }
+  console.log(length);
+
+  console.log("included characters " + characters);
+
+  return passwordG.join("");
+}
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
