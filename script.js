@@ -91,8 +91,7 @@ const special = [
 ];
 let length = 0;
 let characters = "";
-let passwordG = [];
-
+let passwordArray = [];
 let lowers = false;
 let uppers = false;
 let numbereds = false;
@@ -106,7 +105,7 @@ let z = 0;
 function getLength() {
   // get the length
   length = parseFloat(
-    //toallow decimals monintairaly
+    //to allow decimals monintairaly
     window.prompt(
       "Please enter number of characters, theres a minimum of 8 and a max of 128",
       "8"
@@ -120,22 +119,21 @@ function getLength() {
     );
   }
 
-  if (length >= 8 && length <= 128) {
-    // confirm  wants length
-    let confirmLength = window.confirm(
-      "Are you sure you want a password length of " + length
+  // confirm  wants length
+  let confirmLength = window.confirm(
+    "Are you sure you want a password length of " + length
+  );
+
+  if (confirmLength) {
+    console.log(length + " confirmed");
+  } else {
+    length = parseFloat(
+      prompt(
+        "Please enter number of characters, theres a minimum of 8 and a max of 128",
+        "8"
+      )
     );
 
-    if (confirmLength === true) {
-      console.log(length + " confirmed");
-    } else {
-      length = parseFloat(
-        prompt(
-          "Please enter number of characters, theres a minimum of 8 and a max of 128",
-          "8"
-        )
-      );
-    }
     while (length < 8 || length > 128 || Number.isInteger(length) === false) {
       // insure length
       length = parseFloat(
@@ -146,8 +144,12 @@ function getLength() {
 }
 
 function getCharType(type) {
-  let charTypes = prompt(" do you want " + type + " characters ?", "yes or no");
+  let charTypesPrompt = prompt(
+    " do you want " + type + " characters ?",
+    "yes or no"
+  );
   //ask if they want type case
+  let charTypes = charTypesPrompt.toLowerCase();
   while (
     charTypes !== "yes" &&
     charTypes !== "y" &&
@@ -165,7 +167,7 @@ function getCharType(type) {
   if (charTypes === "yes" || charTypes === "y") {
     var confirmChar = window.confirm(
       //confirm yes
-      charTypes + " I want " + type + " characters included?"
+      "Yes I want " + type + " characters included?"
     );
     if (confirmChar === true) {
       console.log(charTypes + "confirmed");
@@ -178,7 +180,7 @@ function getCharType(type) {
     //if chartype === no
     var confirmChar = window.confirm(
       //confirm no
-      charTypes + " I do not want " + type + " characters included?"
+      "No I do not want " + type + " characters included?"
     );
     if (confirmChar == true) {
       console.log(charTypes + "confirmed");
@@ -215,7 +217,7 @@ function insureChar() {
     );
 
     if (confirmDefaultChar === true) {
-      //default is low upper number
+      //default is lower upper number
       characters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       lowers = true;
@@ -230,7 +232,6 @@ function insureChar() {
 function generatePassword() {
   //reset values if genertor is run agaian
   characters = "";
-  passwordG = [];
   length = 0;
   lowers = false;
   uppers = false;
@@ -240,6 +241,7 @@ function generatePassword() {
   test2 = false;
   test3 = false;
   test4 = false;
+  z = 0;
 
   getLength();
   getCharType("lowercase");
@@ -256,36 +258,38 @@ function generatePassword() {
 
   while (goodToGo == false) {
     // fill password arrray //insure all selected char types are included
+    passwordArray = []; //empty array for each loop
 
     //randomly fill password with characters
     for (i = 0; i < length; i++) {
-      passwordG.push(
+      passwordArray.push(
         characters.charAt(Math.floor(Math.random() * charactersLength))
       );
     }
     //the check to see if char type is presant
     if (lowers === true) {
-      test1 = passwordG.some((el) => lower.includes(el));
+      test1 = passwordArray.some((el) => lower.includes(el));
     } else {
       //if its not supposed to be there make it pass goodtogo check
       test1 = true;
     }
     if (uppers === true) {
-      test2 = passwordG.some((el) => upper.includes(el));
+      test2 = passwordArray.some((el) => upper.includes(el));
     } else {
       test2 = true;
     }
     if (numbereds === true) {
-      test3 = passwordG.some((el) => numbers.includes(el));
+      test3 = passwordArray.some((el) => numbers.includes(el));
     } else {
       test3 = true;
     }
     if (specails === true) {
-      test4 = passwordG.some((el) => special.includes(el));
+      test4 = passwordArray.some((el) => special.includes(el));
     } else {
       test4 = true;
     }
-    z = z + 1; // counter for how many attemps untill good to go passed
+    z++; // counter for how many attemps untill good to go passed
+
     // if all the selected char types are present then move on to displaying password
     if (test1 === true && test2 === true && test3 === true && test4 === true) {
       goodToGo = true;
@@ -293,8 +297,9 @@ function generatePassword() {
   }
   console.log("included characters " + characters);
   console.log("this ran  " + z + "  times");
-  return passwordG.join("");
+  return passwordArray.join("");
 } //end of the generatepassword function
+
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
