@@ -112,7 +112,7 @@ function getLength() {
     )
   );
 
-  while (length < 4 || length > 128 || Number.isInteger(length) === false) {
+  while (length < 8 || length > 128 || Number.isInteger(length) === false) {
     //insure length range and no decimals
     length = parseFloat(
       prompt("Invalid input: a integer between 8 and 128 is required", "8")
@@ -133,7 +133,7 @@ function getLength() {
         "8"
       )
     );
-    while (length < 4 || length > 128 || Number.isInteger(length) === false) {
+    while (length < 8 || length > 128 || Number.isInteger(length) === false) {
       // insure length
       length = parseFloat(
         prompt("invalid input a minimum of 8 and a max of 128 is required", "8")
