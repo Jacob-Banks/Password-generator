@@ -258,7 +258,7 @@ function generatePassword() {
     passwordArray = []; //empty the array for each loop
 
     //randomly fill password with characters
-    for (i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
       passwordArray.push(
         characters.charAt(Math.floor(Math.random() * charactersLength))
       );
@@ -303,6 +303,7 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
+  document.getElementById("headline").innerHTML = "Your Password Is:";
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
