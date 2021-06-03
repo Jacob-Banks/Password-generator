@@ -104,103 +104,58 @@ let z = 0;
 
 function getLength() {
   // get the length
-  length = parseFloat(
-    //to allow decimals monintairaly
-    window.prompt(
-      "Please enter your desired number of characters. Theres a minimum of 8 and a max of 128",
-      "10"
-    )
-  );
-
-  while (length < 8 || length > 128 || Number.isInteger(length) === false) {
-    //insure length range and no decimals
-    length = parseFloat(
-      prompt("Invalid input: a integer between 8 and 128 is required", "8")
+  let confirmLength = false;
+  while (confirmLength === false) {
+    length = prompt(
+      "Please enter number of characters, theres a minimum of 8 and a max of 128",
+      "8"
     );
-  }
+    if (isNaN(length) === false) {
+      //if input is a number change its type from string to number
+      length = length / 1;
+      console.log(typeof length + " should be number");
+    }
 
-  // confirm  wants length
-  let confirmLength = window.confirm(
-    "Are you sure you want a password length of " + length
-  );
-
-  if (confirmLength) {
-    console.log(length + " confirmed");
-  } else {
-    length = parseFloat(
-      prompt(
-        "Please enter number of characters, theres a minimum of 8 and a max of 128",
-        "8"
-      )
-    );
     while (length < 8 || length > 128 || Number.isInteger(length) === false) {
-      // insure length
-      length = parseFloat(
-        prompt("invalid input a minimum of 8 and a max of 128 is required", "8")
-      ); // forced interger no more chances to change
+      // insure length and integer
+      length = prompt(
+        "invalid input: a interger between 8 and  128 is required",
+        "8"
+      );
+      if (isNaN(length) === false) {
+        length = length / 1;
+        console.log(typeof length + " should be number");
+      }
+    }
+    // confirm  wants length
+    confirmLength = window.confirm(
+      "Are you sure you want a password length of " + length
+    );
+    if (confirmLength) {
+      console.log(length + " confirmed");
     }
   }
 }
 
 function getCharType(type) {
-  //ask if they want type case
-  let charTypesPrompt = prompt("Do you want " + type + " characters ?", "yes");
-  //make lowercase
-  let charTypes = charTypesPrompt.toLowerCase();
-  while (
-    charTypes !== "yes" &&
-    charTypes !== "y" &&
-    charTypes !== "no" &&
-    charTypes !== "n"
-  ) {
-    //insure yes or no
-    charTypesPrompt = prompt(
-      " error you must enter 'yes' or 'no' Do you want " +
-        type +
-        " characters ?",
-      "yes or no"
-    );
-    //make lowercase
-    charTypes = charTypesPrompt.toLowerCase();
-  }
-  if (charTypes === "yes" || charTypes === "y") {
-    //confirm yes
-    var confirmChar = window.confirm(
-      "Yes I want " + type + " characters included?"
-    );
-    if (confirmChar === true) {
-      console.log(charTypes + "confirmed");
-      charTypes = "yes";
-    } else {
-      charTypes = "no"; //switch value if cancel is clicked
-      console.log("changed their mind");
-    }
-  } else {
-    //if chartype === no //confirm no
-    var confirmChar = window.confirm(
-      "No I do not want " + type + " characters included?"
-    );
-    if (confirmChar == true) {
-      console.log(charTypes + "confirmed");
-    } else {
-      charTypes = "yes"; //switch value
-      console.log("changed their mind");
-    }
-  }
+  var confirmChar = window.confirm(
+    "Do you want  " + type + " characters included?"
+  );
+  console.log(type + " " + confirmChar + " is confirmed");
   // add type of characters
-  if (type === "lowercase" && charTypes === "yes") {
+  if (type === "lowercase" && confirmChar === true) {
     characters += "abcdefghijklmnopqrstuvwxyz"; // adds chartype characters to posiible characters
     lowers = true; //makes goodtogo confirm passW contains chartype
   }
-  if (type === "uppercase" && charTypes === "yes") {
+  if (type === "uppercase" && confirmChar === true) {
     characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     uppers = true;
   }
-  if (type === "numbered" && charTypes === "yes") {
+  if (type === "numbered" && confirmChar === true) {
     characters += "0123456789";
     numbereds = true;
   }
-  if (type === "specialcase" && charTypes === "yes") {
+  if (type === "specialcase" && confirmChar === true) {
     characters += "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
     specails = true;
   }
@@ -254,7 +209,9 @@ function generatePassword() {
   var goodToGo = false;
 
   while (goodToGo == false) {
-    // fill password arrray //insure all selected char types are included
+    // fill password arrray
+    //insure all selected char types are included
+
     passwordArray = []; //empty the array for each loop
 
     //randomly fill password with characters
