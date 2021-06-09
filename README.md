@@ -5,8 +5,9 @@
 <p> This password generator asks the user which type of characters they want, and the length they desire and then generates a random password matching their input. Lots of prompts!</p>
  
 <h3>Screenshot</h3>
+
 ![screenshot](/assets/images/screenshot.png)
- 
+
 <h3>Live website </h3>
 https://jacob-banks.github.io/Password-generator/
 
