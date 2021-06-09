@@ -91,7 +91,6 @@ const special = [
 ];
 let length = 0;
 let characters = "";
-let passwordArray = [];
 let lowers = false;
 let uppers = false;
 let numbereds = false;
@@ -107,23 +106,27 @@ function getLength() {
   let confirmLength = false;
   while (confirmLength === false) {
     length = prompt(
-      "Please enter number of characters, theres a minimum of 8 and a max of 128",
-      "8"
+      "Please enter your desired number of characters, theres a minimum of 8 and a max of 128",
+      "10"
     );
+    // parseInt(prompt...) allowed users to input decimals ie 8.5
+    // parseFloat(prompt...) allowed users to input weirdness ie 8,someletters and that would pass my insure length check
+
     if (isNaN(length) === false) {
       //if input is a number change its type from string to number
-      length = length / 1;
+      // dividing/multiplying length by 1 was the easiest thing I could find to make the user input a integer
+      length /= 1;
       console.log(typeof length + " should be number");
     }
 
     while (length < 8 || length > 128 || Number.isInteger(length) === false) {
       // insure length and integer
       length = prompt(
-        "invalid input: a interger between 8 and  128 is required",
-        "8"
+        "Invalid input: a interger between 8 and  128 is required",
+        "10"
       );
       if (isNaN(length) === false) {
-        length = length / 1;
+        length /= 1;
         console.log(typeof length + " should be number");
       }
     }
@@ -132,7 +135,7 @@ function getLength() {
       "Are you sure you want a password length of " + length
     );
     if (confirmLength) {
-      console.log(length + " confirmed");
+      console.log(length + " confirmed"); //break out of while loop
     }
   }
 }
@@ -145,13 +148,13 @@ function getCharType(type) {
   // add type of characters
   if (type === "lowercase" && confirmChar === true) {
     characters += "abcdefghijklmnopqrstuvwxyz"; // adds chartype characters to posiible characters
-    lowers = true; //makes goodtogo confirm passW contains chartype
+    lowers = true; //makes goodtogo check confirm passwordArray contains chartype
   }
   if (type === "uppercase" && confirmChar === true) {
     characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     uppers = true;
   }
-  if (type === "numbered" && confirmChar === true) {
+  if (type === "number" && confirmChar === true) {
     characters += "0123456789";
     numbereds = true;
   }
@@ -198,17 +201,16 @@ function generatePassword() {
   getLength();
   getCharType("lowercase");
   getCharType("uppercase");
-  getCharType("numbered");
+  getCharType("number");
   getCharType("specialcase");
 
   // if they said no to all char types
   insureChar();
   //end of prompts
 
-  var charactersLength = characters.length;
-  var goodToGo = false;
+  let goodToGo = false;
 
-  while (goodToGo == false) {
+  while (goodToGo === false) {
     // fill password arrray
     //insure all selected char types are included
 
@@ -217,14 +219,17 @@ function generatePassword() {
     //randomly fill password with characters
     for (let i = 0; i < length; i++) {
       passwordArray.push(
-        characters.charAt(Math.floor(Math.random() * charactersLength))
+        characters.charAt(Math.floor(Math.random() * characters.length))
       );
     }
+
     //the check to see if char type is presant
+
     if (lowers === true) {
+      //if any array item in passwordarray is included in the chartype array then test===true
       test1 = passwordArray.some((char) => lower.includes(char));
     } else {
-      //if its not supposed to be there make it pass goodtogo check
+      //if the chartype is not supposed to be there make it pass goodtogo check
       test1 = true;
     }
     if (uppers === true) {
@@ -247,20 +252,22 @@ function generatePassword() {
     // if all the selected char types are present then move on to displaying password
     if (test1 === true && test2 === true && test3 === true && test4 === true) {
       goodToGo = true;
+      //exit while loop
     }
   }
   console.log("included characters " + characters);
   console.log("this ran  " + z + "  times");
 
   return passwordArray.join("");
-} //end of the generatepassword function
+}
+//end of the generatepassword function
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  document.getElementById("headline").innerHTML = "Your Password Is:";
+  document.getElementById("headline").innerHTML = "Your Password Is:"; // change the "generate password" h2
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
