@@ -8,8 +8,8 @@
 ![screenshot](/assets/screenshot.png)
  
 <h3>Live website </h3>
-https://github.com/Jacob-Banks/Password-generator/deployments/activity_log?environment=github-pages
- 
+https://jacob-banks.github.io/Password-generator/
+
 <h3>Made with</h3>
 <p>HTML (provided) CSS(provided) JavaScript </p>
  
